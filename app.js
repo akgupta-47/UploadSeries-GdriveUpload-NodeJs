@@ -81,6 +81,7 @@ app.get('/google/callback' , (req,res) => {
     }
 });
 
+// Upload files to drive
 app.post('/upload', (req, res)=> {
     upload(req, res, (err) => {
         if (err) throw err;
@@ -91,8 +92,10 @@ app.post('/upload', (req, res)=> {
             auth: oAuth2Client,
         });
 
+        const folderId = '12_jskHPXQ1c18xwl0b6ucoENGqLEauin';
         const filemetadata = {
-            name: req.file.filename
+            name: req.file.filename,
+            parents: [folderId]
         }
 
         const media = {
