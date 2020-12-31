@@ -33,6 +33,7 @@ const Storage = multer.diskStorage({
   
 const upload = multer({
     storage: Storage,
+    limits: {fileSize: 1000000},
 }).single("file"); //Field name and max count
 
 var userName, userImage;
