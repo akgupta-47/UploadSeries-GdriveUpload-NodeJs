@@ -87,6 +87,7 @@ app.post('/upload', (req, res)=> {
     upload(req, res, (err) => {
         if (err) {
             // console.log(err);
+            // if error then render it as a popup
             res.render('success', { name: userName, pic: userImage, success:false, msg:err})
         };
         // console.log(req.file.path);
@@ -96,12 +97,15 @@ app.post('/upload', (req, res)=> {
             auth: oAuth2Client,
         });
 
+        // parents property takes folderId of folder in which we have to store the file
+        // name is the name of the file when stored in drive
         const folderId = '12_jskHPXQ1c18xwl0b6ucoENGqLEauin';
         const filemetadata = {
             name: req.file.filename,
             parents: [folderId]
         }
 
+        // body takes location of file from where it is to be picked
         const media = {
             mimetype : req.file.mimetype,
             body: fs.createReadStream(req.file.path)

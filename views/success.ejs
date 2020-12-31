@@ -49,14 +49,14 @@
             </h3>
 
             <% if (success) { %>
-              <div class="alert alert-success alert-dismissible">
+              <div class="alert alert-success alert-dismissible" id="file_upload_popup">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close"
                   >×</a
                 >
                 <strong>Success!</strong> Your Image File is Uploaded.
               </div>
             <% } else if (msg) { %>
-              <div class="alert alert-danger alert-dismissible">
+              <div class="alert alert-danger alert-dismissible" id="file_upload_popup">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close"
                   >×</a
                 >
@@ -84,6 +84,14 @@
       </div>
     </div>
   </body>
+  <script>
+    // autoremove the popup after 10 seconds
+    setTimeout(() => {
+      if ($('#file_upload_popup').length > 0) {
+        $('#file_upload_popup').remove();
+      }
+    }, 10000);
+  </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </html>
