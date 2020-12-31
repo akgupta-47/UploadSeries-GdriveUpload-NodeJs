@@ -60,7 +60,7 @@ app.get('/', (req, res) => {
             userName = response.data.name;
             userImage = response.data.picture;
 
-            res.render('success', { name: userName, pic: userImage, success: false});
+            res.render('success', { name: userName, pic: userImage, success: false, msg: ''});
         })
     }
 });
@@ -72,7 +72,7 @@ app.get('/google/callback' , (req,res) => {
             if(err){
                 console.log("Error in Authenticating",err);
             }else{
-                console.log("authetication successful");
+                // console.log("authetication successful");
                 oAuth2Client.setCredentials(tokens);
 
                 authed = true;
@@ -85,7 +85,10 @@ app.get('/google/callback' , (req,res) => {
 // Upload files to drive
 app.post('/upload', (req, res)=> {
     upload(req, res, (err) => {
-        if (err) throw err;
+        if (err) {
+            // console.log(err);
+            res.render('success', { name: userName, pic: userImage, success:false, msg:err})
+        };
         // console.log(req.file.path);
 
         const drive = google.drive({
@@ -113,7 +116,7 @@ app.post('/upload', (req, res)=> {
 
             // if no error then delete that file from image folder
             fs.unlinkSync(req.file.path);
-            res.render('success', { name: userName, pic: userImage, success: true});
+            res.render('success', { name: userName, pic: userImage, success: true, msg: ''});
         })
     })
 })
